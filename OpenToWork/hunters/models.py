@@ -1,20 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Hunter(models.Model):
-    name = models.CharField(max_length=50)
-    mail = models.EmailField()
-    ofertas = models.ForeignKey(Ofertas1, on_delete=models.CASCADE)
-    trabaja = models.ManyToManyField(Empresas, on_delete=models.CASCADE)
-    perfil_user = models.OneToOneField(Usuarios, on_delete=models.CASCADE)
-    publico = models.BooleanField()
-class Empresa(models.Model):
+
+class FuenteOfertas2(models.Model):
     name = models.CharField(max_length=50)
 class Sector(models.Models):
-    sector = models.ForeignKey(Categoria, on_delete=models.SET_NULL)
-class Categoria(models.model):
-    categoria = models.CharField(max_length=50)
-    sector = models.ManyToOneRel(Sector, on_delete=models.SET_NULL)
+    sector = models.CharField(max_length=100)
+class CategoriaSector(models.Model):
+    name_categoria = models.CharField(max_length=100)
+    sector = models.ForeignKey(Sector, on_delete=models.CASCADE)
 class Trabajo(models.Model):
     TIPO_CONTRATO_CHOICES = [
         ('Tiempo Completo', 'Tiempo Completo'),
@@ -58,3 +53,13 @@ class Ofertas2(models.Model):
     localizacion = models.CharField(max_length=30, choices=Trabajo.LOCALIZACION_CHOICES)
     salario = models.DecimalField(max_digits=10, decimal_places=2)
     plazasDisponibles = models.IntegerField()
+    fentes = models.ForeignKey(FuenteOfertas2, on_delete=models.CASCADE)
+class Hunter(models.Model):
+    name = models.CharField(max_length=50)
+    mail = models.EmailField()
+    ofertas = models.ForeignKey(Ofertas1, on_delete=models.CASCADE)
+    trabaja = models.CharField(max_length=50)
+    perfil_user = models.OneToOneField(User, on_delete=models.CASCADE)
+    publico = models.BooleanField()
+
+# scraping, secotr, web, fechas de scraping, hora de automatico, fecha maxima
